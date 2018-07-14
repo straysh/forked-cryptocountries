@@ -17,13 +17,24 @@ const routes = {
   children: [
     {
       path: '',
-      load: () => import(/* webpackChunkName: 'home' */ './home'),
+      load: () => import(/* webpackChunkName: 'home' */ './dapp'),
     },
     {
       path: '/login',
       load: () => import(/* webpackChunkName: 'login' */ './login'),
     },
-
+    {
+      path: '/dapp',
+      load: () => import(/* webpackChunkName: 'dapp' */ './dapp'),
+    },
+    {
+      path: '/country/:id',
+      load: () => import(/* webpackChunkName: 'dapp' */ './country'),
+    },
+    {
+      path: '/myitems',
+      load: () => import(/* webpackChunkName: 'myitems' */ './myitems'),
+    },
     // Wildcard routes, e.g. { path: '(.*)', ... } (must go last)
     {
       path: '(.*)',
@@ -36,7 +47,7 @@ const routes = {
     const route = await next();
 
     // Provide default values for title, description etc.
-    route.title = `${route.title || 'Untitled Page'} - www.reactstarterkit.com`;
+    route.title = `${route.title || 'Untitled Page'}`;
     route.description = route.description || '';
 
     return route;
