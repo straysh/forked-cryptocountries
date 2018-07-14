@@ -5,6 +5,7 @@ import imgUrl from '../../../public/countries/au.svg';
 
 class MyLargeModal extends React.Component {
   render() {
+    const data = this.props.data;
     return (
       <Modal
         {...this.props}
@@ -12,14 +13,22 @@ class MyLargeModal extends React.Component {
         aria-labelledby="contained-modal-title-lg"
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-lg">澳大利亚</Modal.Title>
+          <Modal.Title id="contained-modal-title-lg">
+            {data.name} &nbsp;<small>刷新价格</small>
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div style={{ backgroundColor: '#000000', width: '200px' }}>
             <img src={imgUrl} width="164" height="164" />
           </div>
           <div>
-            <p>You can purchase Argentina for 53.87646 ETH from 18E169</p>
+            <p>
+              You can purchase Argentina for <strong>{data.price}</strong> from
+              &nbsp;
+              <Button bsStyle="primary" bsSize="xsmall">
+                {data.owner}
+              </Button>
+            </p>
             <p>
               The next price someone can purchase this country for is 63.22237
               ETH
@@ -36,17 +45,17 @@ class MyLargeModal extends React.Component {
         </Modal.Body>
         <Modal.Footer>
           <div style={{ width: '500px' }}>
-            <span>477474.33 ETH &nbsp;</span>
-            <Button
-              bsStyle="primary"
-              onClick={() => this.setState({ lgShow: true })}
-            >
+            <span>{data.price} &nbsp;</span>
+            <Button bsStyle="primary" onClick={this.handleClick}>
               购买
             </Button>
           </div>
         </Modal.Footer>
       </Modal>
     );
+  }
+  handleClick() {
+    alert('通多MetaMask，打开交易窗口');
   }
 }
 

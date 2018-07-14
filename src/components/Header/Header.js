@@ -22,6 +22,7 @@ import { User } from '../../actions';
 
 import s from './Header.css';
 import Link from '../Link';
+import Alerts from '../Alerts';
 import Navigation from '../Navigation';
 import logoUrl from './logo-small.png';
 import logoUrl2x from './logo-small@2x.png';

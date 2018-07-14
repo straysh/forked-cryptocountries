@@ -14,10 +14,6 @@ class Country extends React.Component {
     return (
       <div className={s.root}>
         <div className={s.container}>
-          <Alerts
-            infoType="danger"
-            infoContent="您目前正在使用测试网络“ropsten”。"
-          />
           <h1>
             <strong>{this.props.title}</strong>
           </h1>

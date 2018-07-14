@@ -29,13 +29,13 @@ class UserList extends React.Component {
       },
       {
         id: 2,
-        name: 'Hehe',
+        name: '张三',
         countries: 5,
         value: '21.52 ETH',
       },
       {
         id: 3,
-        name: 'D95270',
+        name: 'BTC大佬',
         countries: 3,
         value: '1.52 ETH',
       },

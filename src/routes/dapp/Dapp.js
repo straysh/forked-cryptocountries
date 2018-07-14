@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Alerts from '../../components/Alerts';
 import ButtonComponent from '../../components/Button';
+import AlertComponent from '../../components/Alerts';
 // import DataMapComponent from '../../components/DataMap';
 import ListCompoent from '../../components/List';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
@@ -18,14 +18,24 @@ class Dapp extends React.Component {
     return (
       <div className={s.root}>
         <div className={s.container}>
-          <Alerts
-            infoType="danger"
-            infoContent="您目前正在使用测试网络“ropsten”。"
-          />
-          <Alerts
-            infoType="success"
-            infoContent="Cities are going live! Join the discussion in our Discord"
-          />
+          <div>
+            <AlertComponent
+              infoType="danger"
+              infoContent="未连接 CryptoCountries需要Web3浏览器才能像MetaMask或Mist一样使用"
+            />
+            <AlertComponent
+              infoType="danger"
+              infoContent="您目前正在使用测试网络“ropsten”。"
+            />
+            <AlertComponent
+              infoType="info"
+              infoContent="载入中...从区块链世界读取状态。"
+            />
+            <AlertComponent
+              infoType="success"
+              infoContent="Cities are going live! Join the discussion in our Discord"
+            />
+          </div>
           <h1>
             <strong>{this.props.title}</strong>
           </h1>

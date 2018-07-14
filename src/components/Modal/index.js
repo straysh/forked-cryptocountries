@@ -15,7 +15,6 @@ class Modal extends React.Component {
   render() {
     const smClose = () => this.setState({ smShow: false });
     const lgClose = () => this.setState({ lgShow: false });
-
     return (
       <ButtonToolbar>
         <Button
@@ -24,8 +23,16 @@ class Modal extends React.Component {
         >
           购买
         </Button>
-        <MyLargeModal show={this.state.smShow} onHide={smClose} />
-        <MyLargeModal show={this.state.lgShow} onHide={lgClose} />
+        <MyLargeModal
+          show={this.state.smShow}
+          onHide={smClose}
+          data={this.props.countryData}
+        />
+        <MyLargeModal
+          show={this.state.lgShow}
+          onHide={lgClose}
+          data={this.props.countryData}
+        />
       </ButtonToolbar>
     );
   }

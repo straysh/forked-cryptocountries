@@ -13,7 +13,7 @@ class Item extends React.Component {
     const data = this.props.data;
     const tooltip = (
       <Tooltip id="tooltip">
-        Countries: <strong>{data.countries}</strong>，Value:{' '}
+        国家: <strong>{data.countries}</strong>，价值:{' '}
         <strong>{data.value}</strong>
       </Tooltip>
     );

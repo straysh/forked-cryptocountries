@@ -27,21 +27,23 @@ class Item extends React.Component {
           <div>
             <img src={ImageUrl2} style={{ height: '40px' }} />
           </div>
-          <h4>{data.name}</h4>
-          {/* <Link to={`/country/${data.id}`}>OWNER:{data.owner}</Link> */}
-          <p>OWNER:{data.owner}</p>
-          <p>首都，语言</p>
-          <p>
-            {data.capital},{data.language}
-          </p>
-          <p>人口，货币</p>
-          <p>
-            {data.population},{data.currency}
-          </p>
-          <p>
-            <span>{data.price}</span>
-          </p>
-          <ModalCompoent />
+          <div style={{ color: '#FFFFFF' }}>
+            <h4>{data.name}</h4>
+            {/* <Link to={`/country/${data.id}`}>OWNER:{data.owner}</Link> */}
+            <p>OWNER:{data.owner}</p>
+            <p>首都，语言</p>
+            <p>
+              {data.capital},{data.language}
+            </p>
+            <p>人口，货币</p>
+            <p>
+              {data.population},{data.currency}
+            </p>
+            <p>
+              <span>{data.price}</span>
+            </p>
+          </div>
+          <ModalCompoent countryData={data} />
         </Thumbnail>
       </Col>
     );
