@@ -1,0 +1,28 @@
+.worldmap_item {
+  background-color: #e8e8e8;
+  border-radius: .28571429rem;
+  color: rgba(0,0,0,.6);
+  cursor: pointer;
+  font-weight: 700;
+  margin: 0 0 .5em 0 !important;
+  overflow: hidden;
+  user-select: none;
+  display: flex;
+  width: 100%;
+  padding: 0;
+}
+
+
+.worldmap_item_rank {
+  float: left;
+  padding: .5833em .833em;
+}
+.worldmap_item_username {
+  float: left;
+  overflow: hidden;
+  padding: .5833em .633em;
+  text-overflow: ellipsis;
+  width: 80%;
+  white-space: pre;
+  text-align: left;
+}

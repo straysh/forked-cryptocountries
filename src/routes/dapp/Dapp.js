@@ -5,7 +5,7 @@ import AlertComponent from '../../components/Alerts';
 // import DataMapComponent from '../../components/DataMap';
 import ListCompoent from '../../components/List';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import s from './Dapp.css';
+import s from './Dapp.scss';
 import UserList from './UserList';
 import CountryList from './CountryList';
 

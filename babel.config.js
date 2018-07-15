@@ -24,4 +24,10 @@ module.exports = {
     '@babel/preset-react',
   ],
   ignore: ['node_modules', 'build'],
+  plugins: [
+    ["module-resolver", {
+      "cwd": "babelrc",
+      "root": "./src",
+    }]
+  ]
 };
