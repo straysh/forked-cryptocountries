@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
-export const SET_RUNTIME_VARIABLE = 'SET_RUNTIME_VARIABLE';
+export const USER_DATA_LOADED = 'USER_DATA_LOADED';
 
 export const SET_ADDRESS = "SET_ADDRESS";
 export const SET_TOKEN_LISTS = "SET_TOKEN_LISTS";

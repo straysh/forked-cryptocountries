@@ -20,16 +20,12 @@ const routes = {
       load: () => import(/* webpackChunkName: 'home' */ './dapp'),
     },
     {
-      path: '/login',
-      load: () => import(/* webpackChunkName: 'login' */ './login'),
-    },
-    {
       path: '/dapp',
       load: () => import(/* webpackChunkName: 'dapp' */ './dapp'),
     },
     {
       path: '/country/:id',
-      load: () => import(/* webpackChunkName: 'dapp' */ './country'),
+      load: () => import(/* webpackChunkName: 'country' */ './country'),
     },
     {
       path: '/myitems',

@@ -1,6 +1,11 @@
 /* eslint-disable react/sort-comp */
 import React from 'react';
+
+
 import UserListCompoent from '../../components/UserList';
+import Worldmap from 'components/Worldmap';
+import s from './Dapp.scss';
+import withStyles from "isomorphic-style-loader/lib/withStyles";
 
 class UserList extends React.Component {
   constructor(props, context) {
@@ -11,40 +16,15 @@ class UserList extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className={s.worldmap_ui}>
         <UserListCompoent data={this.state.data} />
+        <Worldmap />
       </div>
     );
   }
   componentDidMount() {
-    this.loadFirstPageData();
-  }
-  loadFirstPageData() {
-    const data2 = [
-      {
-        id: 1,
-        name: 'D46202',
-        countries: 7,
-        value: '100.52 ETH',
-      },
-      {
-        id: 2,
-        name: '张三',
-        countries: 5,
-        value: '21.52 ETH',
-      },
-      {
-        id: 3,
-        name: 'BTC大佬',
-        countries: 3,
-        value: '1.52 ETH',
-      },
-    ];
-
-    this.setState({
-      data: data2,
-    });
+    // this.loadFirstPageData();
   }
 }
 
-export default UserList;
+export default withStyles(s)(UserList);

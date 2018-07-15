@@ -50,6 +50,7 @@ class Html extends React.Component {
           <link rel="manifest" href="/site.webmanifest" />
           <link rel="apple-touch-icon" href="/icon.png" />
           <link rel="stylesheet" href="/bootstrap.css" />
+          <link rel="stylesheet" href="/worldmap.css" />
           {styles.map(style => (
             <style
               key={style.id}
@@ -58,6 +59,9 @@ class Html extends React.Component {
             />
           ))}
         </head>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+        <script src="/datamaps.world.hires.min.js"></script>
         <body>
           <div id="app" dangerouslySetInnerHTML={{ __html: children }} />
           <script

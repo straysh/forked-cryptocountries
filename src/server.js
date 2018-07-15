@@ -57,8 +57,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //
-// Authentication
+// Server API
 // -----------------------------------------------------------------------------
+app.get('/foo', (req, res)=>{
+  res.json([]);
+})
 
 //
 // Register API middleware
