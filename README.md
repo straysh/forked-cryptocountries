@@ -3,4 +3,4 @@ yarn install
 yarn start
 ```
 
-foo
+foo test
