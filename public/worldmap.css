@@ -1,0 +1,27 @@
+.datamap-hover {
+  background-color: #FFFFFF;
+  border-radius: 5px;
+  border: 1px solid #CCC;
+  color: rgba(0,0,0,.6);
+  padding: 0.5em 0.9em;
+  text-align: center;
+}
+
+.datamap-hover p {
+  line-height: 1.3em;
+  margin-bottom: 0.2em;
+  font-weight: 700;
+}
+
+.datamap-hover p:last-child {
+  margin-bottom: 0em;
+}
+
+.datamap-name {
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.datamap-nick {
+}
