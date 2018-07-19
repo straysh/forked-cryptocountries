@@ -1,10 +1,12 @@
 import React from 'react';
-import Item from './Item';
-import Grid from 'react-bootstrap/lib/Grid';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Row from 'react-bootstrap/lib/Row';
 import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
+
+import Item from './Item';
+import s from './List.scss';
 
 class List extends React.Component {
   constructor(props, context) {
@@ -13,8 +15,8 @@ class List extends React.Component {
   render() {
     return (
       <div>
-        <Grid>
-          <ButtonToolbar>
+        <div>
+          <ButtonToolbar bsClass={s.rank}>
             <DropdownButton title="价格下降" id="dropdown-size-medium">
               <MenuItem eventKey="1">价格上涨</MenuItem>
               <MenuItem eventKey="2">价格下降</MenuItem>
@@ -22,16 +24,17 @@ class List extends React.Component {
               <MenuItem eventKey="4">最老的</MenuItem>
             </DropdownButton>
           </ButtonToolbar>
-          <p />
+        </div>
+        <div>
           <Row>
             {this.props.data.map((item, index) => (
               <Item key={index} data={item} />
             ))}
           </Row>
-        </Grid>
-      </div>
+        </div>
+    </div>
     );
   }
 }
 
-export default List;
+export default withStyles(s)(List);

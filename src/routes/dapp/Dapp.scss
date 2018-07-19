@@ -20,15 +20,16 @@
   max-width: var(--max-content-width);
 }
 
-.newsItem {
+.item {
   margin: 0 0 2rem;
 }
 
-.newsTitle {
-  font-size: 1.5rem;
+.title {
+  font-size: 2rem;
+  text-align: center;
 }
 
-.newsDesc {
+.desc {
   h1,
   h2,
   h3,
