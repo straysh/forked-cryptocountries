@@ -5,8 +5,19 @@ import Button from 'react-bootstrap/lib/Button';
 class Buttons extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.state = {
+      active: 'all',
+    };
   }
   render() {
+    const top10 = [{'name':'all','region':'所有'},
+      {'name':'as','region':'所有'},
+      {'name':'eu','region':'所有'},
+      {'name':'af','region':'所有'},
+      {'name':'na','region':'所有'},
+      {'name':'sa','region':'所有'},
+      {'name':'oc','region':'所有'},
+      {'name':'an','region':'所有'}];
     return (
       <div>
         <div>
@@ -17,18 +28,27 @@ class Buttons extends React.Component {
         <p />
         <div>
           <ButtonToolbar>
-            <Button bsStyle="primary">所有</Button>
-            <Button>亚洲</Button>
-            <Button>欧洲</Button>
-            <Button>非洲</Button>
-            <Button>北美洲</Button>
-            <Button>南美洲</Button>
-            <Button>大洋洲</Button>
-            <Button>南极洲</Button>
+
+            {top10.map((item, index) => (
+              <Button key={index} bsStyle={this.state.active === 'as' ? 'primary' : 'default'} onClick={this.onClickHandle.bind(this,'as')}>{item.region}</Button>
+            ))}
+
+            <Button bsStyle={this.state.active === 'all' ? 'primary' : 'default'} onClick={this.onClickHandle.bind(this,'all')}>所有</Button>
+            <Button bsStyle={this.state.active === 'as' ? 'primary' : 'default'} onClick={this.onClickHandle.bind(this,'as')}>亚洲</Button>
+            <Button bsStyle={this.state.active === 'eu' ? 'primary' : 'default'} onClick={this.onClickHandle.bind(this,'eu')}>欧洲</Button>
+            <Button bsStyle={this.state.active === 'af' ? 'primary' : 'default'} onClick={this.onClickHandle.bind(this,'af')}>非洲</Button>
+            <Button bsStyle={this.state.active === 'na' ? 'primary' : 'default'} onClick={this.onClickHandle.bind(this,'na')}>北美洲</Button>
+            <Button bsStyle={this.state.active === 'sa' ? 'primary' : 'default'} onClick={this.onClickHandle.bind(this,'sa')}>南美洲</Button>
+            <Button bsStyle={this.state.active === 'oc' ? 'primary' : 'default'} onClick={this.onClickHandle.bind(this,'oc')}>大洋洲</Button>
+            <Button bsStyle={this.state.active === 'an' ? 'primary' : 'default'} onClick={this.onClickHandle.bind(this,'an')}>南极洲</Button>
           </ButtonToolbar>
         </div>
       </div>
     );
+  }
+  onClickHandle(code){
+    this.setState({ active: code});
+    this.props.onClickHandle(code);
   }
 }
 

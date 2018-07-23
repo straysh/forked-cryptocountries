@@ -12,24 +12,32 @@ class Dapp extends React.Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
   };
-
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      oblast: 'all',
+    };
+  }
+  componentDidMount(){
+    // console.log(this.props);
+  }
   render() {
     return (
       <div className={s.root}>
         <div className={s.container}>
           <div>
-            <AlertComponent
-              infoType="danger"
-              infoContent="未连接 CryptoCountries需要Web3浏览器才能像MetaMask或Mist一样使用"
-            />
-            <AlertComponent
-              infoType="danger"
-              infoContent="您目前正在使用测试网络“ropsten”。"
-            />
-            <AlertComponent
-              infoType="info"
-              infoContent="载入中...从区块链世界读取状态。"
-            />
+            {/*<AlertComponent*/}
+              {/*infoType="danger"*/}
+              {/*infoContent="未连接 CryptoCountries需要Web3浏览器才能像MetaMask或Mist一样使用"*/}
+            {/*/>*/}
+            {/*<AlertComponent*/}
+              {/*infoType="danger"*/}
+              {/*infoContent="您目前正在使用测试网络“ropsten”。"*/}
+            {/*/>*/}
+            {/*<AlertComponent*/}
+              {/*infoType="info"*/}
+              {/*infoContent="载入中...从区块链世界读取状态。"*/}
+            {/*/>*/}
             <AlertComponent
               infoType="success"
               infoContent="Cities are going live! Join the discussion in our Discord"
@@ -37,12 +45,16 @@ class Dapp extends React.Component {
           </div>
           <h1 className={s.title}>{this.props.title}</h1>
           <UserList />
-          <ButtonComponent />
+          <ButtonComponent onClickHandle={this.sortCountry.bind(this)} />
           <h1>COUNTRIES</h1>
           <CountryList />
         </div>
       </div>
     );
+  }
+  sortCountry(code) {
+    console.log(code,'button');
+    this.setState({ oblast: code });
   }
 }
 

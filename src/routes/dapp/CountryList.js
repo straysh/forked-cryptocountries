@@ -1,275 +1,82 @@
 /* eslint-disable react/sort-comp */
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import PropTypes from 'prop-types';
 import ListCompoent from '../../components/List';
 import PaginationComponent from '../../components/Pagination';
 import s from './CountryList.scss';
+import { connect } from 'react-redux';
+import { CountryItems } from '../../actions';
 
 class CountryList extends React.Component {
+  static contextTypes = {
+    fetch: PropTypes.func.isRequired,
+  };
   constructor(props, context) {
     super(props, context);
     this.state = {
-      data: [],
       activePage: 1,
-      totalNumber: 0,
+      data: [],
+      // indexList: [],
+      //   totalNumber: 0,
     };
   }
-
-  componentWillMount() {
-    this.loadFirstData();
+  componentDidMount() {
+    this.props.loadAllItems(this.context.fetch);
   }
-
-  loadFirstData() {
-    const self = this;
-    setTimeout(() => {
-      const data2 = [
-        {
-          id: 2,
-          name: '澳大利亚',
-          flag: 'guoqi',
-          price: '431.52',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 3,
-          name: '美国',
-          flag: 'guoqi',
-          price: '45.52',
-          owner: 'D4632',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 4,
-          name: '中国',
-          flag: 'guoqi',
-          price: '4381.52',
-          owner: 'D44202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 5,
-          name: '日本',
-          flag: 'guoqi',
-          price: '431.52',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 2,
-          name: '法国',
-          flag: 'guoqi',
-          price: '431.52',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 2,
-          name: '英国',
-          flag: 'guoqi',
-          price: '431.52',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 2,
-          name: '德国',
-          flag: 'guoqi',
-          price: '431.52',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },{
-          id: 2,
-          name: '澳大利亚',
-          flag: 'guoqi',
-          price: '431.52',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 3,
-          name: '美国',
-          flag: 'guoqi',
-          price: '4561.52',
-          owner: 'D4632',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 4,
-          name: '中国',
-          flag: 'guoqi',
-          price: '4381.52',
-          owner: 'D44202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 5,
-          name: '日本',
-          flag: 'guoqi',
-          price: '431.52',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 2,
-          name: '法国',
-          flag: 'guoqi',
-          price: '431.52',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 2,
-          name: '英国',
-          flag: 'guoqi',
-          price: '431.52',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 2,
-          name: '德国',
-          flag: 'guoqi',
-          price: '431.52',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },{
-          id: 2,
-          name: '澳大利亚',
-          flag: 'guoqi',
-          price: '431.52',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 3,
-          name: '美国',
-          flag: 'guoqi',
-          price: '4561.52',
-          owner: 'D4632',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 4,
-          name: '中国',
-          flag: 'guoqi',
-          price: '4381.52',
-          owner: 'D44202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 5,
-          name: '日本',
-          flag: 'guoqi',
-          price: '431.52',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 2,
-          name: '法国',
-          flag: 'guoqi',
-          price: '431.52',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 2,
-          name: '英国',
-          flag: 'guoqi',
-          price: '431.52',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 2,
-          name: '德国',
-          flag: 'guoqi',
-          price: '431.52',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-      ];
-      self.setState({data: data2, totalNumber: data2.length});
-    }, 1000);
+  sortState() {
+    console.log('reload country');
   }
-
+  // pageClick(pageNum, belong = 'eu', order = 'new') {
+  //   console.log(pageNum,belong,order,'2222');
+  //   const self = this;
+  //   if(belong !== 'all'){
+  //     let result = Array.from(self.props.countryitems.data.filter(item => item.belong === belong && item.condition === order));
+  //     console.log(pageNum, this.props,this.state,'3333',result);
+  //     if (pageNum !== this.state.activePage) {
+  //       self.state.indexList = [];
+  //       // for (let i = (pageNum - 1) * 5; i < 5 * pageNum; i++) {
+  //       for (let i = 0; i < result.length; i++) {
+  //         self.state.indexList.push(result[i]);
+  //       }
+  //       // }
+  //     }
+  //   }else{
+  //     let result = Array.from(self.props.countryitems.data.filter(item => item.condition === order));
+  //   }
+  //   self.setState({ indexList: self.state.indexList, activePage: pageNum });
+  // }
   pageClick(pageNum) {
+    let tmp = [];
+    const res = this.props.countryitems;
     if (pageNum !== this.state.activePage) {
-      this.setState({data: this.state.data, activePage: pageNum});
+      tmp.length = 0;
+      for (let i = (pageNum - 1) * 5; i < 5 * pageNum; i++) {
+        if(res.data[i]){
+          tmp.push(res.data[i]);
+        }
+      }
+      this.setState({data: tmp, activePage: pageNum});
     }
   }
-
+  // pageRank(code){
+  //   let result = Array.from(this.props.countryitems.data.filter(item => item.condition === code));
+  // }
   render() {
+    const { countryitems } = this.props;
+    let indexList = [];
+    const data = countryitems.data;
+    if (data.length > 0) {
+      for (let i = 0; i < 5; i++) {
+        indexList.push(data[i]);
+      }
+    }
     return (
       <div>
-        <ListCompoent data={this.state.data}/>
+        <ListCompoent data={this.state.data.length > 0 ? this.state.data : indexList } />
         <div className={s.pagination}>
           <PaginationComponent
-            totalNumber={this.state.totalNumber}
+            totalNumber={countryitems.data.length}
             activePage={this.state.activePage}
             pageClick={this.pageClick.bind(this)}
           />
@@ -279,4 +86,15 @@ class CountryList extends React.Component {
   }
 }
 
-export default withStyles(s)(CountryList);
+const mapStateToProps = state => ({
+  countryitems: state.countryitems,
+});
+const mapDispatchToProps = dispatch => ({
+  loadAllItems: (...args) => {
+    dispatch(CountryItems.loadAllItems(...args));
+  },
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withStyles(s)(CountryList));
