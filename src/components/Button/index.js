@@ -30,17 +30,17 @@ class Buttons extends React.Component {
           <ButtonToolbar>
 
             {top10.map((item, index) => (
-              <Button key={index} bsStyle={this.state.active === 'as' ? 'primary' : 'default'} onClick={this.onClickHandle('as')}>{item.region}</Button>
+              <Button key={index} bsStyle={this.state.active === 'as' ? 'primary' : 'default'} onClick={()=>{this.onClickHandle('as')}}>{item.region}</Button>
             ))}
 
-            <Button bsStyle={this.state.active === 'all' ? 'primary' : 'default'} onClick={this.onClickHandle('all')}>所有</Button>
-            <Button bsStyle={this.state.active === 'as' ? 'primary' : 'default'} onClick={this.onClickHandle('as')}>亚洲</Button>
-            <Button bsStyle={this.state.active === 'eu' ? 'primary' : 'default'} onClick={this.onClickHandle('eu')}>欧洲</Button>
-            <Button bsStyle={this.state.active === 'af' ? 'primary' : 'default'} onClick={this.onClickHandle('af')}>非洲</Button>
-            <Button bsStyle={this.state.active === 'na' ? 'primary' : 'default'} onClick={this.onClickHandle('na')}>北美洲</Button>
-            <Button bsStyle={this.state.active === 'sa' ? 'primary' : 'default'} onClick={this.onClickHandle('sa')}>南美洲</Button>
-            <Button bsStyle={this.state.active === 'oc' ? 'primary' : 'default'} onClick={this.onClickHandle('oc')}>大洋洲</Button>
-            <Button bsStyle={this.state.active === 'an' ? 'primary' : 'default'} onClick={this.onClickHandle('an')}>南极洲</Button>
+            <Button bsStyle={this.state.active === 'all' ? 'primary' : 'default'} onClick={()=>{this.onClickHandle('all')}}>所有</Button>
+            <Button bsStyle={this.state.active === 'as' ? 'primary' : 'default'} onClick={()=>{this.onClickHandle('as')}}>亚洲</Button>
+            <Button bsStyle={this.state.active === 'eu' ? 'primary' : 'default'} onClick={()=>{this.onClickHandle('eu')}}>欧洲</Button>
+            <Button bsStyle={this.state.active === 'af' ? 'primary' : 'default'} onClick={()=>{this.onClickHandle('af')}}>非洲</Button>
+            <Button bsStyle={this.state.active === 'na' ? 'primary' : 'default'} onClick={()=>{this.onClickHandle('na')}}>北美洲</Button>
+            <Button bsStyle={this.state.active === 'sa' ? 'primary' : 'default'} onClick={()=>{this.onClickHandle('sa')}}>南美洲</Button>
+            <Button bsStyle={this.state.active === 'oc' ? 'primary' : 'default'} onClick={()=>{this.onClickHandle('oc')}}>大洋洲</Button>
+            <Button bsStyle={this.state.active === 'an' ? 'primary' : 'default'} onClick={()=>{this.onClickHandle('an')}}>南极洲</Button>
           </ButtonToolbar>
         </div>
       </div>
