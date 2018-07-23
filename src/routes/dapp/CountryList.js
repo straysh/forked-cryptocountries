@@ -71,9 +71,12 @@ class CountryList extends React.Component {
         indexList.push(data[i]);
       }
     }
+
+    const {countryListData} = this.props;
     return (
       <div>
-        <ListCompoent data={this.state.data.length > 0 ? this.state.data : indexList } />
+        {/*<ListCompoent data={this.state.data.length > 0 ? this.state.data : indexList } />*/}
+        <ListCompoent data={countryListData.length > 0 ? countryListData : indexList } />
         <div className={s.pagination}>
           <PaginationComponent
             totalNumber={countryitems.data.length}
