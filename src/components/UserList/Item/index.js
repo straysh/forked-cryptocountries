@@ -36,7 +36,7 @@ class Item extends React.Component {
     return (
       <OverlayTrigger placement="top" overlay={tooltip}>
         <Button bsStyle="default" className={s.worldmap_item} style={{fontSize: f}}>
-          <div className={s.worldmap_item_rank} style={{color: i, backgroundColor: bgcolor}}>{index+1}</div>
+          <div className={s.worldmap_item_rank} style={{color: i, backgroundColor: bgcolor}}  >{index+1}</div>
           <div className={s.worldmap_item_username} >{user.nick}</div>
         </Button>
       </OverlayTrigger>

@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import ButtonComponent from '../../components/Button';
 import AlertComponent from '../../components/Alerts';
-// import DataMapComponent from '../../components/DataMap';
-import ListCompoent from '../../components/List';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+
 import s from './Dapp.scss';
 import UserList from './UserList';
 import CountryList from './CountryList';
@@ -36,14 +35,10 @@ class Dapp extends React.Component {
               infoContent="Cities are going live! Join the discussion in our Discord"
             />
           </div>
-          <h1>
-            <strong>{this.props.title}</strong>
-          </h1>
+          <h1 className={s.title}>{this.props.title}</h1>
           <UserList />
-          <p />
-          <p>Map</p>
-          {/* <DataMapComponent /> */}
           <ButtonComponent />
+          <h1>COUNTRIES</h1>
           <CountryList />
         </div>
       </div>

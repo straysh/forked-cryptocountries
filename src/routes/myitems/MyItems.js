@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Alerts from '../../components/Alerts';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import s from './MyItems.css';
+import s from './MyItems.scss';
 import MyitemsList from './MyItemsList';
 
 class MyItems extends React.Component {

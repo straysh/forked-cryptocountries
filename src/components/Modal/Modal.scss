@@ -1,0 +1,72 @@
+.header{
+  font-weight: 500;
+  padding-left: 10px;
+  img {
+    float: left;
+    height: 40px;
+    border-radius: 3px;
+  }
+  span{
+    margin-left: 10px;
+    font-weight: 700;
+  }
+  small{
+    font-size: 4px;
+    margin-left: 10px;
+  }
+}
+.content{
+
+}
+.left{
+  width: 30%;
+  padding: 10px;
+  float: left;
+}
+.countryCardBg{
+  border-radius: 5px;
+  padding: 50px;
+  overflow: hidden;
+  background-color: #000;
+  display: block;
+  img{
+  }
+}
+.right{
+  width: 70%;
+  float: left;
+  padding: 10px;
+  font-size: 1em;
+  flex: auto;
+  position: relative;
+  text-align: left;
+  user-select: text;
+  font-family: Lato,Helvetica Neue,Arial,Helvetica,sans-serif;
+}
+.footer{
+  clear: both;
+}
+.purchase{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.priceInput{
+  height: 33px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+.errInput{
+  padding: 10px;
+  height: 33px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border: 1px solid #e0b4b4;
+  background-color: #fff6f6;
+  color: #9f3a38;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}

@@ -14,6 +14,7 @@ import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 import Badge from 'react-bootstrap/lib/Badge';
+import Button from 'react-bootstrap/lib/Button';
 import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import history from '../../history';
@@ -23,9 +24,8 @@ import { User } from '../../actions';
 import s from './Header.css';
 import Link from '../Link';
 import Alerts from '../Alerts';
-import Navigation from '../Navigation';
-import logoUrl from './logo-small.png';
-import logoUrl2x from './logo-small@2x.png';
+import ethOffline from './eth_offline.svg';
+import ethOnline from './eth_online.svg';
 
 class Header extends React.Component {
   _gotoTokens(e) {
@@ -33,42 +33,57 @@ class Header extends React.Component {
     e.stopPropagation();
     history.replace('/tokens');
   }
+
   render() {
     const { user } = this.props;
     return (
-      <Navbar inverse collapseOnSelect>
-        <Navbar.Header>
-          <Navbar.Brand>
-            <Link className={s.brand} to="/">
-              <img
-                src={logoUrl}
-                width="32"
-                height="32"
-                alt="EchoWallet"
-                className={s.App_logo}
-              />
-            </Link>
-            <span>加密国家</span>
-          </Navbar.Brand>
-          <Navbar.Toggle />
-        </Navbar.Header>
-        <Navbar.Collapse>
-          <Nav pullRight>
-            <NavItem href="/dapp">市井</NavItem>
-            <NavItem href="/myitems">
-              我的国家 <Badge>4</Badge>
-            </NavItem>
-            <NavItem href="#">D46202</NavItem>
-            <NavItem href="#" onClick={this._gotoTokens} title="Connected:xxx">
-              {user.address || 'Online'}
-            </NavItem>
-            {/* <NavDropdown title={mapLocalesName()} id="language-you-choose"> */}
-            {/* <MenuItem href="?lang=en-us">English</MenuItem> */}
-            {/* <MenuItem href="?lang=zh-cn">CN</MenuItem> */}
-            {/* </NavDropdown> */}
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+      <div className={s.root}>
+        <div className={s.container}>
+          <Navbar
+            fluid
+            collapseOnSelect
+            style={{ backgroundColor: '#fff', borderColor: '#fff' }}
+          >
+            <Navbar.Header>
+              <Navbar.Brand>
+                加密国家
+              </Navbar.Brand>
+              <Navbar.Toggle />
+            </Navbar.Header>
+            <Navbar.Collapse>
+              <Nav pullRight>
+                <NavItem href="/dapp">市井</NavItem>
+                <NavItem href="/myitems">
+                  MY ITEMS &nbsp;<Badge>4</Badge>
+                </NavItem>
+                <NavItem href="#">
+                  <Button bsStyle="primary" bsSize="xsmall">
+                    D46202
+                  </Button>
+                </NavItem>
+                <NavItem
+                  href="#"
+                  onClick={this._gotoTokens}
+                  title="Connected:xxx"
+                >
+                  {user.address || (
+                    <img
+                      src={ethOffline}
+                      width="35"
+                      height="35"
+                      alt=""
+                    />
+                  )}
+                </NavItem>
+                {/* <NavDropdown title={mapLocalesName()} id="language-you-choose"> */}
+                {/* <MenuItem href="?lang=en-us">English</MenuItem> */}
+                {/* <MenuItem href="?lang=zh-cn">CN</MenuItem> */}
+                {/* </NavDropdown> */}
+              </Nav>
+            </Navbar.Collapse>
+          </Navbar>
+        </div>
+      </div>
     );
   }
 }

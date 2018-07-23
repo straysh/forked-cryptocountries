@@ -9,19 +9,24 @@ class Buttons extends React.Component {
   render() {
     return (
       <div>
-        <ButtonToolbar>
-          <Button bsStyle="primary">国家</Button>
-        </ButtonToolbar>
+        <div>
+          <ButtonToolbar>
+            <Button bsStyle="primary">国家</Button>
+          </ButtonToolbar>
+        </div>
         <p />
-        <ButtonToolbar>
-          <Button bsStyle="primary">所有</Button>
-          <Button>亚洲</Button>
-          <Button>欧洲</Button>
-          <Button>非洲</Button>
-          <Button>美洲</Button>
-          <Button>南极洲</Button>
-          <Button>大洋洲</Button>
-        </ButtonToolbar>
+        <div>
+          <ButtonToolbar>
+            <Button bsStyle="primary">所有</Button>
+            <Button>亚洲</Button>
+            <Button>欧洲</Button>
+            <Button>非洲</Button>
+            <Button>北美洲</Button>
+            <Button>南美洲</Button>
+            <Button>大洋洲</Button>
+            <Button>南极洲</Button>
+          </ButtonToolbar>
+        </div>
       </div>
     );
   }

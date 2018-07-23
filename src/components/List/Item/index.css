@@ -1,0 +1,17 @@
+.card {
+   display: block;
+   content: " ";
+   height: 0;
+   clear: both;
+   overflow: hidden;
+   visibility: hidden;
+ }
+.country-card {
+
+}
+.content {
+
+}
+.btcss {
+  border: 1px solid #ccc;
+}
