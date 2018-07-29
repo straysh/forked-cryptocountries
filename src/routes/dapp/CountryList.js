@@ -17,66 +17,59 @@ class CountryList extends React.Component {
     this.state = {
       activePage: 1,
       data: [],
-      // indexList: [],
-      //   totalNumber: 0,
     };
   }
   componentDidMount() {
-    this.props.loadAllItems(this.context.fetch);
+    // this.props.loadAllItems(this.context.fetch);
   }
-  sortState() {
-    console.log('reload country');
-  }
-  // pageClick(pageNum, belong = 'eu', order = 'new') {
-  //   console.log(pageNum,belong,order,'2222');
-  //   const self = this;
-  //   if(belong !== 'all'){
-  //     let result = Array.from(self.props.countryitems.data.filter(item => item.belong === belong && item.condition === order));
-  //     console.log(pageNum, this.props,this.state,'3333',result);
-  //     if (pageNum !== this.state.activePage) {
-  //       self.state.indexList = [];
-  //       // for (let i = (pageNum - 1) * 5; i < 5 * pageNum; i++) {
-  //       for (let i = 0; i < result.length; i++) {
-  //         self.state.indexList.push(result[i]);
-  //       }
-  //       // }
-  //     }
-  //   }else{
-  //     let result = Array.from(self.props.countryitems.data.filter(item => item.condition === order));
-  //   }
-  //   self.setState({ indexList: self.state.indexList, activePage: pageNum });
-  // }
-  pageClick(pageNum) {
-    let tmp = [];
-    const res = this.props.countryitems;
-    if (pageNum !== this.state.activePage) {
-      tmp.length = 0;
-      for (let i = (pageNum - 1) * 5; i < 5 * pageNum; i++) {
-        if(res.data[i]){
-          tmp.push(res.data[i]);
+  pageClick(pageNum, order = 'down') {
+    let data = [];
+    const { countryitems } = this.props;
+    let result = countryitems.data;
+    if (result.length > 0) {
+      if (order === 'up') {
+        data = result.sort((a, b) => a.itemId - b.itemId);
+      } else if (order === 'down') {
+        data = result.sort((a, b) => a.itemId - b.itemId).reverse();
+      } else if (order === 'new') {
+        data = result.sort((a, b) => a.updated - b.updated);
+      } else if (order === 'old') {
+        data = result.sort((a, b) => a.updated - b.updated).reverse();
+      }
+      const tmp = [];
+      for (let i = (pageNum - 1) * 32; i < 32 * pageNum; i++) {
+        if (data[i]) {
+          tmp.push(data[i]);
         }
       }
-      this.setState({data: tmp, activePage: pageNum});
+      // if (pageNum !== this.state.activePage) {}
+      // console.log(pageNum, this.state.activePage,data,tmp);
+      this.setState({ data: tmp, activePage: pageNum });
     }
   }
-  // pageRank(code){
-  //   let result = Array.from(this.props.countryitems.data.filter(item => item.condition === code));
-  // }
+  pageRank(order) {
+    let pageNum = 1;
+    this.pageClick(pageNum, order);
+  }
+  getFirstData(data) {
+    let indexList = [];
+    if (data.length > 0) {
+      for (let i = 0; i < 32; i++) {
+        if (data[i]) indexList.push(data[i]);
+      }
+      indexList = indexList.sort((a, b) => a.itemId - b.itemId).reverse(); //默认 down
+    }
+    return indexList;
+  }
   render() {
     const { countryitems } = this.props;
-    let indexList = [];
-    const data = countryitems.data;
-    if (data.length > 0) {
-      for (let i = 0; i < 5; i++) {
-        indexList.push(data[i]);
-      }
-    }
-
-    const {countryListData} = this.props;
+    // console.log(countryitems); //tmp have value, data or  getFirst ？？？
     return (
       <div>
-        {/*<ListCompoent data={this.state.data.length > 0 ? this.state.data : indexList } />*/}
-        <ListCompoent data={countryListData.length > 0 ? countryListData : indexList } />
+        <ListCompoent
+          data={this.state.data.length > 0 ? this.state.data : this.getFirstData(countryitems.data)}
+          pageRank={this.pageRank.bind(this)}
+        />
         <div className={s.pagination}>
           <PaginationComponent
             totalNumber={countryitems.data.length}
@@ -95,8 +88,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   loadAllItems: (...args) => {
     dispatch(CountryItems.loadAllItems(...args));
-  },
+  }
 });
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps,

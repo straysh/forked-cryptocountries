@@ -1,18 +1,22 @@
 import React from 'react';
 import {connect} from "react-redux";
 import withStyles from "isomorphic-style-loader/lib/withStyles";
-
 import s from './worldmap.css';
 import worldData from 'data/all_countries.json';
-import {UserItems} from "actions";
+// import {UserItems} from "actions";
+import {SetCountiesColor} from "actions";
 import web3 from 'utils/web3';
+import allCountries from "../../data/all_countries.json";
 
 class Worldmap extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
-
-  componentDidUpdate(){
+  componentDidUpdate() {
+    let domId = document.getElementById('worldmap_container');
+    while(domId.hasChildNodes()) {
+      domId.removeChild(domId.firstChild);
+    }
     const self = this;
     let map = new Datamap({
       element: document.getElementById('worldmap_container'),
@@ -22,45 +26,49 @@ class Worldmap extends React.Component {
           , a = d3.geo.mercator().translate([t / 2, n / 2]).scale(t / 2 / Math.PI).rotate([-11, 0]);
         return {
           path: d3.geo.path().projection(a),
-          projection: a
+          projection: a,
         }
       },
       fills: {
-        defaultFill: "#B9B9B9"
+        defaultFill: "#CCCCCC"
       },
       geographyConfig: {
         popupTemplate: (t, n)=>{
-          return self.popup(t, n)
+          return self.popup(t, n);
         },
         highlightFillColor: "#1A1B1C",
         highlightBorderColor: "#1A1B1C",
         highlightBorderWidth: 1,
-        borderWidth: 0
+        borderWidth: 0,
       },
       done: function(t) {
-        t.svg.selectAll(".datamaps-subunit").on("click", function(t) {
-          e.click(t)
-        })
-      }
+        // t.svg.selectAll(".datamaps-subunit").on("click", function(t) {
+        //   e.click(t)
+        // })
+      },
     });
 
     const data = {};
-    const UserItems = this.props.useritems.data;
-
+    let currentCountry = [];
+    const UserItems = this.props.setcountriescolor.data;
     for(let d of UserItems.values()) {
       if(worldData[d.itemId]){
+        currentCountry.push(worldData[d.itemId]);
         worldData[d.itemId] = {...worldData[d.itemId], ...d};
       }
     }
-
     for(let k in worldData) {
       if(!worldData.hasOwnProperty(k)) continue;
       let d = worldData[k];
-      data[d.code3] = "#" + (!d.owner ? "" : d.owner.slice(d.owner.length-6));
+      currentCountry.map(item => {
+        if(item.code3 === d.code3){
+          data[d.code3] = "#" + (!d.owner ? "" : d.owner.slice(d.owner.length-6));
+        }
+      });
     }
     map.updateChoropleth(data, {
-      reset: !0
-    })
+      reset: !0,
+    });
   }
 
   popup(e) {
@@ -84,7 +92,7 @@ class Worldmap extends React.Component {
     //   return '\n        <div class="datamap-hover">\n          <p class="datamap-name">\n            ' + r.name + '\n          </p>\n          <p>\n            <span style="' + i + '" class="datamap-nick">\n              ' + Object(p.a)(r.nick) + "\n            </span> " + g(s) + "\n          </p>\n        </div>\n      "
     // }
     const pop = '<div class="datamap-hover"><p class="datamap-name">' + r.name + '</p><p><span style="color:#000" class="datamap-nick">' + r.nick + '</span> ' + web3.parsePrice(r.price, 2) + ' ETH</p></div>';
-    console.log(pop);
+    // console.log(pop);
     return pop;
   }
 
@@ -98,13 +106,15 @@ class Worldmap extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  useritems: state.useritems,
+  setcountriescolor: state.setcountriescolor,
 });
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadAllItems: (...args)=>{dispatch(UserItems.loadAllItems(...args));}
+    loadSetCountiesColor: (...args)=>{dispatch(SetCountiesColor.loadSetCountiesColor(...args));}
   };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)( withStyles(s)(Worldmap) );
+
+// export default  withStyles(s)(Worldmap);

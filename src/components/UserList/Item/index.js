@@ -19,8 +19,10 @@ class Item extends React.Component {
     super(props, context);
   }
   render() {
-    const {index, data: user} = this.props;
-    const country = allCountries[user.itemId] ? allCountries[user.itemId].name : 'N/A';
+    const { index, data: user } = this.props;
+    const country = allCountries[user.itemId]
+      ? allCountries[user.itemId].name
+      : 'N/A';
     const tooltip = (
       <Tooltip id="tooltip">
         国家: <strong>{country}</strong>，价值:{' '}
@@ -29,19 +31,46 @@ class Item extends React.Component {
     );
 
     const addr = user.owner;
-    const c =  addr.slice(addr.length - 6).toUpperCase();
-    const i = parseInt(c, 16) > 8388607.5 ? "#FFF" : "#000";
-    const bgcolor = "#" + c;
-    const f = ((index===0 && 1.3) || (index===1&&1.1) || (0.9)) + "em";
+    const c = addr.slice(addr.length - 6).toUpperCase();
+    const i = parseInt(c, 16) > 8388607.5 ? '#FFF' : '#000';
+    const bgcolor = `#${c}`;
+    const f = `${(index === 0 && 1.3) || (index === 1 && 1.1) || 0.9}em`;
     return (
       <OverlayTrigger placement="top" overlay={tooltip}>
-        <Button bsStyle="default" className={s.worldmap_item} style={{fontSize: f}}>
-          <div className={s.worldmap_item_rank} style={{color: i, backgroundColor: bgcolor}}  >{index+1}</div>
-          <div className={s.worldmap_item_username} >{user.nick}</div>
+        <Button
+          bsStyle="default"
+          className={s.worldmap_item}
+          style={{ fontSize: f }}
+          onClick={() => {
+            this.onClickHandle(user.owner);
+          }}
+          onMouseOver={() => {
+            this.onMouseOverHandle(user.owner);
+          }}
+          onMouseOut={() => {
+            this.onMouseOutHandle(user.owner);
+          }}
+        >
+          <div
+            className={s.worldmap_item_rank}
+            style={{ color: i, backgroundColor: bgcolor }}
+          >
+            {index + 1}
+          </div>
+          <div className={s.worldmap_item_username}>{user.nick}</div>
         </Button>
       </OverlayTrigger>
     );
   }
+  onClickHandle = owner => {
+    this.props.userCountryList(owner);
+  };
+  onMouseOverHandle = owner => {
+    this.props.setCountryColor(owner);
+  };
+  onMouseOutHandle = owner => {
+    this.props.setAllCountryColor(owner);
+  };
 }
 
 export default withStyles(s)(Item);

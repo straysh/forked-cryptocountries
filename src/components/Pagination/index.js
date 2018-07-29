@@ -8,7 +8,7 @@ class Paginations extends React.Component {
   render() {
     const self = this;
     const cur = self.props.activePage;
-    const size = 5;
+    const size = 32;
     const total = Math.ceil(self.props.totalNumber / size);
     const pageNum = []; // 显示分页按钮
     let begin;

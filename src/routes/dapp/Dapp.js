@@ -14,9 +14,6 @@ class Dapp extends React.Component {
   };
   constructor(props, context) {
     super(props, context);
-    this.state = {
-      oblast: 'all',
-    };
   }
   componentDidMount(){
     // console.log(this.props);
@@ -45,16 +42,12 @@ class Dapp extends React.Component {
           </div>
           <h1 className={s.title}>{this.props.title}</h1>
           <UserList />
-          <ButtonComponent onClickHandle={this.sortCountry.bind(this)} />
+          <ButtonComponent />
           <h1>COUNTRIES</h1>
           <CountryList />
         </div>
       </div>
     );
-  }
-  sortCountry(code) {
-    console.log(code,'button');
-    this.setState({ oblast: code });
   }
 }
 

@@ -45,7 +45,7 @@ class MyLargeModal extends React.Component {
                 </Button>
               </p>
               <p>
-                The next price someone can purchase this country for is 63.22237
+                The next price someone can purchase this country for is {data.nextPrice}
                 ETH
               </p>
               <p>
@@ -67,12 +67,12 @@ class MyLargeModal extends React.Component {
               placeholder="价格在ETH"
               onChange={this.changeHandle.bind(this)}
               value={this.state.value}
-              className={this.state.value >= this.props.data.price ? s.priceInput : s.errInput}
+              className={this.state.value >= data.price ? s.priceInput : s.errInput}
             />
             <Button
               bsStyle="primary"
               onClick={this.clickHandle.bind(this)}
-              disabled={this.state.value >= this.props.data.price ? false : true}
+              disabled={this.state.value >= data.price ? false : true}
             >
               购买
             </Button>

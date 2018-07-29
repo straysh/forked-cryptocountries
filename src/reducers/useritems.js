@@ -1,7 +1,5 @@
 import {SET_ADDRESS, SET_TOKEN_LISTS, SET_TOKEN_NEW, SET_TX_LISTS, USER_DATA_LOADED} from "../constants";
 
-
-
 export default function useritems(state = {
   data: [],
 }, action) {

@@ -1,27 +1,81 @@
 /* eslint-disable react/sort-comp */
 import React from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import PropTypes from 'prop-types';
 import ListCompoent from '../../components/List';
 import PaginationComponent from '../../components/Pagination';
+// import s from './CountryList.scss';
+import { connect } from 'react-redux';
+import { CountryItems } from '../../actions';
 import s from './MyItemsList.scss';
 
 class MyItemsList extends React.Component {
+  static contextTypes = {
+    fetch: PropTypes.func.isRequired,
+  };
   constructor(props, context) {
     super(props, context);
     this.state = {
-      data: [],
       activePage: 1,
-      totalNumber: 0,
+      data: [],
     };
   }
-
+  componentDidMount() {
+    //我已购买的所有国家, 同步到user redux 数量 name owner
+    //是否可以完全引用 countryList.js dispatch 切换数据
+    this.props.loadAllItems(this.context.fetch);
+  }
+  pageClick(pageNum, order = 'down') {
+    let data = [];
+    const { countryitems } = this.props;
+    let result = countryitems.data;
+    if (result.length > 0) {
+      if (order === 'up') {
+        data = result.sort((a, b) => a.itemId - b.itemId);
+      } else if (order === 'down') {
+        data = result.sort((a, b) => a.itemId - b.itemId).reverse();
+      } else if (order === 'new') {
+        data = result.sort((a, b) => a.updated - b.updated);
+      } else if (order === 'old') {
+        data = result.sort((a, b) => a.updated - b.updated).reverse();
+      }
+      const tmp = [];
+      for (let i = (pageNum - 1) * 32; i < 32 * pageNum; i++) {
+        if (data[i]) {
+          tmp.push(data[i]);
+        }
+      }
+      // if (pageNum !== this.state.activePage) {}
+      // console.log(pageNum, this.state.activePage,data,tmp);
+      this.setState({ data: tmp, activePage: pageNum });
+    }
+  }
+  pageRank(order) {
+    let pageNum = 1;
+    this.pageClick(pageNum, order);
+  }
+  getFirstData(data) {
+    let indexList = [];
+    if (data.length > 0) {
+      for (let i = 0; i < 32; i++) {
+        if (data[i]) indexList.push(data[i]);
+      }
+      indexList = indexList.sort((a, b) => a.itemId - b.itemId).reverse(); //默认 down
+    }
+    return indexList;
+  }
   render() {
+    const { countryitems } = this.props;
+    // console.log(countryitems); //tmp have value, data or  getFirst ？？？
     return (
       <div>
-        <ListCompoent data={this.state.data}/>
+        <ListCompoent
+          data={this.state.data.length > 0 ? this.state.data : this.getFirstData(countryitems.data)}
+          pageRank={this.pageRank.bind(this)}
+        />
         <div className={s.pagination}>
           <PaginationComponent
-            totalNumber={this.state.totalNumber}
+            totalNumber={countryitems.data.length}
             activePage={this.state.activePage}
             pageClick={this.pageClick.bind(this)}
           />
@@ -29,245 +83,18 @@ class MyItemsList extends React.Component {
       </div>
     );
   }
-
-  componentDidMount() {
-    this.loadFirstPageData();
-  }
-
-  loadFirstPageData() {
-    const self = this;
-    setTimeout(() => {
-      const data2 = [
-        {
-          id: 2,
-          name: '澳大利亚',
-          flag: 'guoqi',
-          price: '431.52ETH',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 3,
-          name: '美国',
-          flag: 'guoqi',
-          price: '4561.52ETH',
-          owner: 'D4632',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 4,
-          name: '中国',
-          flag: 'guoqi',
-          price: '4381.52ETH',
-          owner: 'D44202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 5,
-          name: '日本',
-          flag: 'guoqi',
-          price: '431.52ETH',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 2,
-          name: '法国',
-          flag: 'guoqi',
-          price: '431.52ETH',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 2,
-          name: '英国',
-          flag: 'guoqi',
-          price: '431.52ETH',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 2,
-          name: '德国',
-          flag: 'guoqi',
-          price: '431.52ETH',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 2,
-          name: '澳大利亚',
-          flag: 'guoqi',
-          price: '431.52ETH',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 3,
-          name: '美国',
-          flag: 'guoqi',
-          price: '4561.52ETH',
-          owner: 'D4632',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 4,
-          name: '中国',
-          flag: 'guoqi',
-          price: '4381.52ETH',
-          owner: 'D44202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 5,
-          name: '日本',
-          flag: 'guoqi',
-          price: '431.52ETH',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 2,
-          name: '法国',
-          flag: 'guoqi',
-          price: '431.52ETH',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 2,
-          name: '英国',
-          flag: 'guoqi',
-          price: '431.52ETH',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 3,
-          name: '美国',
-          flag: 'guoqi',
-          price: '4561.52ETH',
-          owner: 'D4632',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 4,
-          name: '中国',
-          flag: 'guoqi',
-          price: '4381.52ETH',
-          owner: 'D44202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 5,
-          name: '日本',
-          flag: 'guoqi',
-          price: '431.52ETH',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 2,
-          name: '法国',
-          flag: 'guoqi',
-          price: '431.52ETH',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 2,
-          name: '英国',
-          flag: 'guoqi',
-          price: '431.52ETH',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 2,
-          name: '德国',
-          flag: 'guoqi',
-          price: '431.52ETH',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-        {
-          id: 2,
-          name: '澳大利亚',
-          flag: 'guoqi',
-          price: '431.52ETH',
-          owner: 'D46202',
-          capital: '堪培拉',
-          language: '英语',
-          population: '30298765',
-          currency: 'USD',
-        },
-      ];
-      self.setState({data: data2, totalNumber: data2.length});
-    }, 1000);
-  }
-
-  pageClick(pageNum) {
-    if (pageNum !== this.state.activePage) {
-      this.setState({data: this.state.data, activePage: pageNum});
-    }
-  }
 }
 
-export default withStyles(s)(MyItemsList);
+const mapStateToProps = state => ({
+  countryitems: state.countryitems,
+});
+const mapDispatchToProps = dispatch => ({
+  loadAllItems: (...args) => {
+    dispatch(CountryItems.loadAllItems(...args));
+  }
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withStyles(s)(MyItemsList));

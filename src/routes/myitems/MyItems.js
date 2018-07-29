@@ -11,7 +11,6 @@ class MyItems extends React.Component {
   };
 
   render() {
-    // const id = this.props.param.id;
     return (
       <div className={s.root}>
         <div className={s.container}>

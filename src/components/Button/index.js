@@ -1,24 +1,32 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
 import Button from 'react-bootstrap/lib/Button';
+import { connect } from 'react-redux';
+import { SortItems } from '../../actions';
 
 class Buttons extends React.Component {
+  static contextTypes = {
+    fetch: PropTypes.func.isRequired,
+  };
   constructor(props, context) {
     super(props, context);
-    this.state = {
-      active: 'all',
-    };
+  }
+  componentDidMount() {
+    this.props.loadAll('all'); //数据初始化 主入口
   }
   render() {
-    const {activeTab} = this.props;
-    const top10 = [{'name':'all','region':'所有'},
-      {'name':'as','region':'所有'},
-      {'name':'eu','region':'所有'},
-      {'name':'af','region':'所有'},
-      {'name':'na','region':'所有'},
-      {'name':'sa','region':'所有'},
-      {'name':'oc','region':'所有'},
-      {'name':'an','region':'所有'}];
+    const { sortitems } = this.props;
+    const states = [
+      { region: 'all', name: '所有' },
+      { region: 'as', name: '亚洲' },
+      { region: 'eu', name: '欧洲' },
+      { region: 'af', name: '非洲' },
+      { region: 'na', name: '北美洲' },
+      { region: 'sa', name: '南美洲' },
+      { region: 'oc', name: '大洋洲' },
+      { region: 'an', name: '南极洲' },
+    ];
     return (
       <div>
         <div>
@@ -29,28 +37,36 @@ class Buttons extends React.Component {
         <p />
         <div>
           <ButtonToolbar>
-
-            {top10.map((item, index) => (
-              <Button key={index} bsStyle={activeTab === 'as' ? 'primary' : 'default'} onClick={()=>{this.onClickHandle('as')}}>{item.region}</Button>
+            {states.map((item, index) => (
+              <Button
+                key={index}
+                bsStyle={sortitems.activeTab === item.region ? 'primary' : 'default'}
+                onClick={() => {
+                  this.onClickHandle(item.region);
+                }}
+              >
+                {item.name}
+              </Button>
             ))}
-
-            <Button bsStyle={activeTab === 'all' ? 'primary' : 'default'} onClick={()=>{this.onClickHandle('all')}}>所有</Button>
-            <Button bsStyle={activeTab === 'as' ? 'primary' : 'default'} onClick={()=>{this.onClickHandle('as')}}>亚洲</Button>
-            <Button bsStyle={activeTab === 'eu' ? 'primary' : 'default'} onClick={()=>{this.onClickHandle('eu')}}>欧洲</Button>
-            <Button bsStyle={activeTab === 'af' ? 'primary' : 'default'} onClick={()=>{this.onClickHandle('af')}}>非洲</Button>
-            <Button bsStyle={activeTab === 'na' ? 'primary' : 'default'} onClick={()=>{this.onClickHandle('na')}}>北美洲</Button>
-            <Button bsStyle={activeTab === 'sa' ? 'primary' : 'default'} onClick={()=>{this.onClickHandle('sa')}}>南美洲</Button>
-            <Button bsStyle={activeTab === 'oc' ? 'primary' : 'default'} onClick={()=>{this.onClickHandle('oc')}}>大洋洲</Button>
-            <Button bsStyle={activeTab === 'an' ? 'primary' : 'default'} onClick={()=>{this.onClickHandle('an')}}>南极洲</Button>
           </ButtonToolbar>
         </div>
       </div>
     );
   }
-  onClickHandle = (code)=>{
-    // this.setState({ active: code});
-    this.props.onClickHandle(code);
-  }
+  onClickHandle = state => {
+    this.props.loadAll(state);
+  };
 }
 
-export default Buttons;
+const mapStateToProps = state => ({
+  sortitems: state.sortitems,
+});
+const mapDispatchToProps = dispatch => {
+  return {
+    loadAll: (...args) => {dispatch(SortItems.loadAll(...args));},
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Buttons);

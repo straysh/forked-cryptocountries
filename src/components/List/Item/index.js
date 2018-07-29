@@ -27,9 +27,9 @@ class Item extends React.Component {
           <a href={`/country/${data.id}`} className={s.countryCardBg}>
             <Image src={ImageUrl2} responsive className={s.flagImg} />
             <div className={s.countryCardName}><span>{data.name}</span></div>
-            <Image src={ImageUrl} responsive className={s.countryImg} />
+            <Image src={ImageUrl} responsive />
           </a>
-          <div className={s.countryCardOwner} style={{color: i, backgroundColor: bgcolor}}><span>OWNER: {data.owner}</span></div>
+          <div className={s.countryCardOwner} style={{color: i, backgroundColor: bgcolor}}><span>OWNER: {data.nick}</span></div>
           {/* <Link to={`/country/${data.id}`}>OWNER:{data.owner}</Link> */}
           <div className={s.content}>
             <div className={s.column}>
@@ -43,7 +43,7 @@ class Item extends React.Component {
           </div>
           <div className={s.purchase}>
             <div className={s.content}>
-              <a href="javascript:;">{data.price} ETH</a>
+              <a href="javascript:;">{(data.price).substr(0, 10)} ETH</a>
               <ModalCompoent countryData={data} />
             </div>
           </div>

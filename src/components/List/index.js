@@ -11,30 +11,28 @@ import s from './List.scss';
 // import {CountryItems} from 'actions';
 
 class List extends React.Component {
-  // static contextTypes = {
-  //   fetch: PropTypes.func.isRequired,
-  // };
+  static contextTypes = {
+    fetch: PropTypes.func.isRequired,
+  };
   constructor(props, context) {
     super(props, context);
     this.state = {
       value: '价格下降',
     };
   }
-  componentDidMount(){
+  componentDidMount() {
     // this.props.loadAllItems(this.context.fetch);
-    // console.log(this.props,'222');
   }
   render() {
-    // this.props.data
     return (
       <div>
         <div className={s.rankCountry}>
           <ButtonToolbar>
             <DropdownButton title={this.state.value} id="dropdown-size-medium">
-              <MenuItem eventKey="价格上涨" onSelect={this.onSelectHandle.bind(this)}>价格上涨</MenuItem>
-              <MenuItem eventKey="价格下降" onSelect={this.onSelectHandle.bind(this)}>价格下降</MenuItem>
-              <MenuItem eventKey="最新" onSelect={this.onSelectHandle.bind(this)}>最新</MenuItem>
-              <MenuItem eventKey="最老的" onSelect={this.onSelectHandle.bind(this)}>最老的</MenuItem>
+              <MenuItem eventKey="up" onSelect={this.onSelectHandle.bind(this)}>价格上涨</MenuItem>
+              <MenuItem eventKey="down" onSelect={this.onSelectHandle.bind(this)}>价格下降</MenuItem>
+              <MenuItem eventKey="new" onSelect={this.onSelectHandle.bind(this)}>最新</MenuItem>
+              <MenuItem eventKey="old" onSelect={this.onSelectHandle.bind(this)}>最老的</MenuItem>
             </DropdownButton>
           </ButtonToolbar>
         </div>
@@ -49,10 +47,25 @@ class List extends React.Component {
     );
   }
   onSelectHandle(eventKey) {
+    let tmp = '价格下降';
+    switch (eventKey) {
+      case "up":
+        tmp = '价格上涨';
+      break;
+      case "down":
+        tmp = '价格下降';
+        break;
+      case "new":
+        tmp = '最新';
+        break;
+      case "old":
+        tmp = '最老的';
+        break;
+    }
     this.setState({
-      value: eventKey,
+      value: tmp,
     });
-    console.log(this.props);
+    this.props.pageRank(eventKey);
   }
 }
 
