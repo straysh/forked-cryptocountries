@@ -46,9 +46,7 @@ class Header extends React.Component {
             style={{ backgroundColor: '#fff', borderColor: '#fff' }}
           >
             <Navbar.Header>
-              <Navbar.Brand>
-                加密国家
-              </Navbar.Brand>
+              <Navbar.Brand>加密国家</Navbar.Brand>
               <Navbar.Toggle />
             </Navbar.Header>
             <Navbar.Collapse>
@@ -65,15 +63,10 @@ class Header extends React.Component {
                 <NavItem
                   href="#"
                   onClick={this._gotoTokens}
-                  title="Connected:xxx"
+                  title="Connected:xxx || You are offline"
                 >
                   {user.address || (
-                    <img
-                      src={ethOffline}
-                      width="35"
-                      height="35"
-                      alt=""
-                    />
+                    <img src={ethOffline} width="35" height="35" alt="" />
                   )}
                 </NavItem>
                 {/* <NavDropdown title={mapLocalesName()} id="language-you-choose"> */}
