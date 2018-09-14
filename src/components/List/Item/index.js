@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/lib/Button';
 import  * as ImagePng  from '../../../../public/country-flags/countryFlag';
 import  * as ImageSvg  from '../../../../public/mapsvg/mapSvg';
 import ModalCompoent from '../../../components/Modal';
+import web3js from 'utils/web3';
 import s from './Item.scss';
 
 class Item extends React.Component {
@@ -25,7 +26,7 @@ class Item extends React.Component {
     return (
       <Col xs={6} md={3}>
         <div className={s.card}>
-          <a href={`/country/${data.itemId}`} className={s.countryCardBg}>
+          <a href={`/country/${data.itemId}`} title={data.name} className={s.countryCardBg}>
             <Image src={ImagePng[data.code]} responsive className={s.flagImg}/>
             <div className={s.countryCardName}><span>{data.name}</span></div>
             <Image src={ImageSvg[data.code]} responsive/>
@@ -53,7 +54,7 @@ class Item extends React.Component {
           </div>
           <div className={s.purchase}>
             <div className={s.content}>
-              <a href="javascript:;">{(data.price).substr(0, 10)} ETH</a>
+              <a href="javascript:;">{web3js.parsePrice(data.price)} ETH</a>
               <ModalCompoent countryData={data}/>
             </div>
           </div>

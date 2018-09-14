@@ -6,19 +6,19 @@ import Image from 'react-bootstrap/lib/Image';
 import * as ImagePng from '../../../public/country-flags/countryFlag';
 import * as ImageSvg from '../../../public/mapsvg/mapSvg';
 import s from './Modal.scss';
-
-import Web3 from 'web3';
-
+import web3js from 'utils/web3';
+import Web3 from "web3";
 import ABI from '../../../ganache/build/contracts/Info';
 
 class MyLargeModal extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.state = { value: '' };
+    this.state = { value: '', id: '' };
   }
 
   render() {
     const data = this.props.data;
+
     return (
       <Modal
         {...this.props}
@@ -44,15 +44,14 @@ class MyLargeModal extends React.Component {
             <div className={s.right}>
               <p>
                 You can purchase <strong>{data.name}</strong> for{' '}
-                <strong>{data.price}</strong> from
+                <strong>{web3js.parsePrice(data.price)} ETH</strong> from
                 <Button bsStyle="primary" bsSize="xsmall">
                   {data.owner}
                 </Button>
               </p>
               <p>
                 The next price someone can purchase this country for is{' '}
-                {data.nextPrice}
-                ETH
+                <strong>{web3js.parsePrice(data.nextPrice)} ETH</strong>
               </p>
               <p>
                 您可以出价高于当前的国家价格，以确保您获得购买。如果您的出价超过当前价格，您将得到退款的差额。
@@ -70,17 +69,17 @@ class MyLargeModal extends React.Component {
           <div className={s.purchase}>
             <input
               type="text"
-              placeholder="价格在ETH"
+              placeholder="价格是ETH"
               onChange={this.changeHandle.bind(this)}
               value={this.state.value}
               className={
-                this.state.value >= data.price ? s.priceInput : s.errInput
+                this.state.value >= web3js.parsePrice(data.price) ? s.priceInput : s.errInput
               }
             />
             <Button
               bsStyle="primary"
               onClick={this.clickHandle.bind(this)}
-              disabled={!(this.state.value >= data.price)}
+              disabled={!(this.state.value >= web3js.parsePrice(data.price))}
             >
               购买
             </Button>
@@ -93,7 +92,8 @@ class MyLargeModal extends React.Component {
   componentDidMount() {
     const self = this;
     this.setState({
-      value: self.props.data.price || '',
+      value: web3js.parsePrice(self.props.data.price) || '',
+      id: self.props.data.itemId,
     });
   }
 
@@ -104,60 +104,47 @@ class MyLargeModal extends React.Component {
   }
 
   clickHandle() {
-    // Is there is an injected web3 instance?
     if (typeof web3 !== 'undefined') {
+      // 使用 Mist/MetaMask 的提供者
       App.web3Provider = web3.currentProvider;
-      web3 = new Web3(web3.currentProvider);
+      web3 = new Web3(window.web3.currentProvider);
     } else {
-      // If no injected web3 instance is detected, fallback to Ganache.
-      App.web3Provider = new web3.providers.HttpProvider(
-        'http://127.0.0.1:7545',
-      );
-      web3 = new Web3(App.web3Provider);
+      // 处理用户没安装的情况， 比如显示一个消息
+      // 告诉他们要安装 MetaMask 来使用我们的应用
+      return;
+      // App.web3Provider = new web3.providers.HttpProvider('http://127.0.0.1:7545');
+      // web3 = new Web3(App.web3Provider);
     }
     const contract = new web3.eth.Contract(
       ABI.abi,
-      '0x538c98e0d41418bccda0c170f62a39389f6e40b1',
+      '0x38dca6c292a31767c45b50eb9ba548c046f1859f',
     );
+    // console.log(this.state.value);
+    let itemId = this.state.id;
+    contract.methods.nextPriceOf(itemId).call().then(function (result) {
+      let value = result; // this.state.value; //直接用nextPrice作为交易价格
+      if (itemId && value) {
+        web3.eth.getAccounts().then(accounts => {
+          let account = accounts[0];
+          //todo 购买写入区块链 metamask有问题
+          contract.methods.buy(itemId).send({
+            from: account,
+            value: value, //web3.utils.toWei(value, 'ether'),
+          }).then(function(receipt){
+            //如果成功了执行
+            console.log(receipt,'666');
+          }).catch(function (error) {
+            console.log(error.message);
+          });
+        });
+      }
+      // console.log(web3.utils.toWei('0.001', 'ether')); //1000000000000000
 
-    // web3.eth.getAccounts(function(error, accounts) {
-    //   if (error) {
-    //     console.log(error);
-    //   }
-    //
-    //   let account = accounts[0];
+    }).catch(function (error) {
+      console.log(error.message);
+    });
 
-    // App.contracts.Adoption.deployed().then(function(instance) {
-    //   // 发送交易领养宠物
-    //   // return instance.adopt(petId, {from: account});
-    // }).then(function(result) {
-    //   // return App.markAdopted();
-    //   console.log(result);
-    // }).catch(function(err) {
-    //   console.log(err.message);
-    // });
-    // });
 
-    // contract.methods.priceOf(410).call().then(function (result) {
-    //   console.log(result);
-    // }).catch(function (error) {
-    //   console.log(error.message);
-    // });
-
-    // 写入有问题 先不理metamask问题
-    // contract.methods.buy(410).send({
-    //   from: '0x6A196D55463A576bd5f13Ff1F16a634E822B2308',
-    // }).then(function(result){
-    //   console.log(result);
-    // }).catch(function (error) {
-    //   console.log(error.message);
-    // });
-
-    // contract.methods.owner().call().then(function (result) {
-    //   console.log(result);
-    // }).catch(function (error) {
-    //   console.log(error.message);
-    // });
   }
 }
 
